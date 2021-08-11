@@ -1,0 +1,56 @@
+version: "3.4"
+
+services:
+  php:
+    container_name: php_fpm
+    build:
+      context: .
+      dockerfile: ./php/Dockerfile
+    volumes:
+      - ../visio:/var/www/html
+      - ./conf/www.conf:/etc/php-fpm.d/www.conf
+      - ./conf/php.ini:/usr/local/etc/php/php.ini
+
+  apache:
+    container_name: server
+    build:
+      context: .
+      dockerfile: ./apache/Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+      - 5000:443
+    volumes:
+      - ../visio:/var/www/html
+      - ./conf/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+      - ./conf/httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_USER: root
+    volumes:
+      - visiodb:/var/lib/mysql
+    command: --innodb-use-native-aio=0
+    ports:
+      - 3306:3306
+
+  caddy:
+    image: dunglas/mercure
+    restart: unless-stopped
+    environment:
+      SERVER_NAME: ':3000'
+      MERCURE_PUBLISHER_JWT_KEY: '84faec9cdc61e372e40afaf5308d2d0f'
+      MERCURE_SUBSCRIBER_JWT_KEY: '84faec9cdc61e372e40afaf5308d2d0f'
+    command: /usr/bin/caddy run -config /etc/caddy/Caddyfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  visiodb:
+  caddy_data:
+  caddy_config:

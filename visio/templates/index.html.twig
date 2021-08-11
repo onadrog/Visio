@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+{% block title %}Visio
+{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="style.css"/>
+{% endblock %}
+{% block body %}
+	<div id="root" data-user={{ user }}></div>
+	{% webpack_entry_js 'app' defer %}
+	{% webpack_entry_js 'commons' defer %}
+{% endblock %}

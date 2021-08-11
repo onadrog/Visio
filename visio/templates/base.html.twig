@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		{% block stylesheets %}{% endblock %}
+		{% block preloadjavascripts %}{% endblock %}
+	</head>
+	<body>
+		{% block body %}{% endblock %}
+		<footer>
+			&#169;
+			{{ "now"|date("Y") }},
+			<a href="https://sebastiengordano.com" rel="noopener noreferrer" target="blank">Sébastien Gordano</a>
+		</footer>
+		{% block javascripts %}{% endblock %}
+	</body>
+</html>

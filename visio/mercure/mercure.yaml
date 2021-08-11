@@ -1,0 +1,4 @@
+addr: ':3000'
+jwt_key: '84faec9cdc61e372e40afaf5308d2d0f'
+write_timeout: '0s'
+cors_allowed_origins: 'https://localhost https://localhost:5000'

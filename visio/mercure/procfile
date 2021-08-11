@@ -1,0 +1,1 @@
+web: ADDR=":${PORT}" ./mercure --jwt-key='84faec9cdc61e372e40afaf5308d2d0f' --cors-allowed-origins='yourwebsite' --write-timeout='0s'
